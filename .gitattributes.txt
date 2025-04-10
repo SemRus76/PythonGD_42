@@ -36,7 +36,7 @@
 *.psb             binary
 *.psd             binary
 # SVG treated as an asset (binary) by default.
-*.svg             text
+*.svg             binary
 # If you want to treat it as binary,
 # use the following line instead.
 # *.svg           binary

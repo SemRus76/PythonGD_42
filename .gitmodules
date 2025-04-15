@@ -1,0 +1,3 @@
+[submodule "src/classwork/function"]
+	path = src/classwork/function
+	url = https://github.com/SemRus76/MathFunctionForExample.git

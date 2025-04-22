@@ -1,49 +1,87 @@
-print("Hello World")
-print("Hello World 2")
-print("Hello World 3")
-print("Hello World 4")
-from function.function import getMathFunc as getMath
+# Лямбда-выражения aka Анонимные функции
+# Это функции у которых нет привычного имени и объявления. 
+# Они создаются в одной конкретной переменной и могут вызываться ТОЛЬКО 
+# через эту переменную
+# Синтаксис:
+# <переменная> = lambda <список параметров> : <тело функции>
+import random
 
-def SplitExample(example : str) -> list:
-    temp = ""
-    first = 0
-    sign = ""
-    second = 0
-    for char in example:
-        if char in "+-*/^":
-            sign = char
-            first = int(temp)
-            temp = ""
-        else:
-            temp += char
-    second = int(temp)
-    return [first, sign, second]
+square = lambda numer: numer * numer
+print(square(2))
 
-def Equales(example : str) -> int:
-    exList = SplitExample(example)
-    func = getMath(exList[1])
-    return func(exList[0],exList[2])
-def InterFib(number : int) -> int:
-    first = 0
-    second = 1
-    for i in range(2, number + 1):
-        second = first + second
-        first = second - first
-    return second
+def Equals(first : int, func) -> str:
+    return f"{first} ** 2 = {func(first)}"
+
+print(Equals(4, lambda numer: numer*numer))
 
 
-# ex = input("Введите пример: ")
-# print(f"Ответ: {ex}={Equales(ex)}")
+# Сортировки
+# Сортировка пузырьком
 
-# Задача 1 - Представьте что у вас есть длиннаяклумба. На этой клумбе
-# высожены разные цветы. Есть места под новые, однако цветы не могут ужиться
-# друг с другом, если между ними нет расстояния, хотя бы в одно посадочное
-# место.
-# Вам передается строка из 0 и 1, где 0 - пустое место, 1 - занятое место
-# Необходимо реализовать функцию, которая вернет максимальное кол-во цветов
-# которые можно посадить на эту клумбу, при условии, что они будут посаженны
-# ОДНОЙ НЕ РАЗРЫВНОЙ группой
-# Пример: [010000010] -> 3
-#         [010010010] -> 0
+def BubbleSort(lst : list) -> list:
+    i = 1
+    while i < len(lst):
+        if lst[i] < lst[i-1]:
+            lst[i], lst[i - 1] = lst[i - 1], lst[i]
+            j = i - 1
+            while j > 0:
+                if lst[j] < lst[j-1]:
+                    lst[j], lst[j-1] = lst[j-1], lst[j]
+                else:
+                     break
+                j -= 1
+            i -= 1
+        i += 1
+    return lst
+
+def SelectionSort(lst : list) -> list:
+    for i in range(len(lst)):
+        minElem = i
+        for j in range(i, len(lst)):
+            if lst[minElem] > lst[j]:
+                minElem = j
+        lst[minElem], lst[i] = lst[i],lst[minElem]
+    return lst
+
+def merge(leftList : list, rightList: list):
+    mergeList = list()
+    left = right = 0
+    for _ in range(0, len(leftList) + len(rightList)):
+        if left < len(leftList) and right < len(rightList):
+            if leftList[left] < rightList[right]:
+                mergeList.append(leftList[left])
+                left += 1
+            else:
+                mergeList.append(rightList[right])
+                right += 1
+        elif left == len(leftList):
+            mergeList.append(rightList[right])
+            right += 1
+        elif right == len(rightList):
+            mergeList.append(leftList[left])
+            left += 1
+    return mergeList
+
+def MergeSort(lst : list) -> list:
+    if len(lst) <= 1:
+        return lst
+    mid = len(lst) // 2
+    leftList = MergeSort(lst[0:mid])
+    rightList = MergeSort(lst[mid:])
+    return merge(leftList, rightList)
+
+lst = [1,6,2,26,87,5,4,120,-161,59,48,-3,36,0]
+lst_2 = list()
+for i in range(0, 10000):
+    lst_2.append(random.randint(-32567, 32567))
+print(BubbleSort(lst_2))
+print("-======-")
+print(SelectionSort(lst_2))
+print("-======-")
+print(MergeSort(lst_2))
+
+
+
+
 
 

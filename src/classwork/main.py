@@ -1,42 +1,20 @@
-from function.function import getMathFunc as mFunc
-import os
+from person import Person
 
-def getResult(example : str) -> int:
-    First = ""
-    Second = ""
-    Sign = ""
-    temp = ""
-    for char in example:
-        if char in "+-*/^":
-            First = int(temp)
-            Sign = char
-            temp = ""
-        elif char in "\n":
-            continue
-        else:
-            temp += char
-    Second = int(temp)
-    func = mFunc(Sign)
-    return func(First, Second)
+if __name__ == "__main__":
+    human_1 = Person()
+    human_1.age = 20
+    human_2 = Person("Margaret")
+    human_2.age = 40
 
-def getFile():
-    resultLst = list()
-    # file = open("resources/name.txt", "r+")
-    with open("name.txt", "r+") as file:
-        for line in file:
-            line = line.removesuffix("\n")
-            result = getResult(line)
-            resultLst.append(f"{line} = {result}\n")
+    # human_2.name = "Megan"
+    # print(human_1.name)
+    # print(human_2.name)
+    # print(human_1.name)
 
-    return resultLst
+    # human_1._Person__age = 10
+    # print(human_1.age)
+    # human_1.age = 1540
+    # print(human_1.age)
 
-os.chdir("resources")
-results = getFile()
-if not os.path.isdir("result"):
-    os.mkdir("result")
-
-os.chdir("result")
-# os.kill(9288,9)
-with open("results.txt", "w") as file:
-    for line in results:
-        file.write(line)
+    print(human_1.say_hello())
+    print(human_2.say_hello())

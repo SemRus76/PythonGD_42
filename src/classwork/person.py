@@ -1,10 +1,21 @@
 # class <Имя класса>:
+from overloading import overload
 
 class Person:
-    def __init__(self, name : str = "Jonatan"):
+
+    @overload
+    def __init__(self):
+        self.__name = None
+        self.__age = None
+
+    @overload
+    def __init__(self, name : str = "Name", age : int = 0):
+        self.__age = age
         self.__name = name
-        self.__age = 20
-        # print(f"Создан {self.__name}")
+
+    @overload
+    def __init__(self, name : str = "Jonatan"):
+        self.__init__(name, 20)
 
     def __del__(self):
         pass

@@ -2,7 +2,6 @@
 from overloading import overload
 
 class Person:
-
     @overload
     def __init__(self):
         self.__name = None

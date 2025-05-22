@@ -164,3 +164,6 @@ class Oper:
             pass
         else:
             return True
+
+    def __str__(self):
+        return f"{self.__value}"

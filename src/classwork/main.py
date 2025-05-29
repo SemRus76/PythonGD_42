@@ -1,168 +1,89 @@
-# Роли в Университете:
-#
-# Студенты      - ФИО, Возраст, Группа
-# Преподаватели - ФИО, Возраст, Кафедра
-# Администрация - ФИО, Возраст, Должность
+# Абстрактные классы
 
-# Наследование - это возможность создания новой сущности (класса) на базе
-# уже существующей сущности (другого класса)
-# Наследование - это механизм языка, позволяющий передать механизмы
-# от classA (родительский класс/superclass) в classB (наследник)
-import abc
-class Person:
-    __name = str()
-    _age = 0
-    _med_id = str()
+# Необходимо реализовать систему классов для оружия в игре
+# Пистолеты, автоматы, снайперская винтовка и БФГ
 
-    def __init__(self,
-                 name : str = "",
-                 age : int = 0,
-                 med_id : str = ""):
-        self.__name = name
-        self._age = age
-        self._med_id = med_id
+# Gun (оружие) - стрелять, целится, перезаряжатся и урон(п)
+# Pistol
+# AutoGun
+# Snipe
+# BFG
+import abc # Библиотека для создания абстрактных классов
 
+class Gun(abc.ABC):
+
+    _damage = 0
+    _bullet = 0
+
+    def __init__(self, damage: int = 0, bullet_count: int = 0):
+        self._damage = damage
+        self._bullet = bullet_count
 
     def __del__(self):
         pass
-
-    @property
-    def med_id(self):
-        return  self._med_id
-    @med_id.setter
-    def med_id(self, new_id : str):
-        if len(new_id) == 0:
-            return
-        self._med_id = new_id
 
     @abc.abstractmethod
-    def getMedId(self): pass
+    def fire(self):
+        pass
+
+    @abc.abstractmethod
+    def aim(self):
+        pass
+
+    @abc.abstractmethod
+    def reload(self):
+        pass
 
     def __str__(self):
-        return f"Имя: {self.__name}\nВозраст: {self._age}"
+        return f"This is class GUN"
 
-    def say_hello(self):
-        return f"Привет, меня зовут {self.__name}"
+class BigFuckingGun(Gun):
 
-
-# Класс Student наследуется от класса Person
-from typing import final
-
-class Student(Person):
-    __group = str()
-
-    def __init__(self, name : str = "",
-                       age : int = 0,
-                       group : str = ""
-                 ):
-        super().__init__(name, age)
-        self.__group = group
+    def __init__(self, damage: int = 0):
+        super().__init__(damage)
 
     def __del__(self):
         pass
 
-    def say_hello(self):
-        return f"{super().say_hello()}. {self.my_group()}"
+    def fire(self):
+        print("ВЫСТРЕЛ БФГ - БОЙСЯ ВСЕЯ И ВСЕ")
 
-    def __str__(self):
-        return f"{super().__str__()}\nГруппа: {self.__group}"
+    def aim(self):
+        print("ЗАЧЕМ ТЫ ЦЕЛИШЬСЯ, ГЛУПЕЦ?!")
 
-    def my_group(self):
-        return f"Я из группы {self.__group}"
+    def reload(self):
+        print("ТЫ ДОВЕЛ БФГ ДО ПЕРЕЗАРЯДКИ? ЗАВОД АДУ ЗАКРЫЛИ, ПАТРОНОВ НЕТ!")
 
-    def getMedId(self):
-        return f"Мой ID - {self._med_id}"
-
-    def func(self):
-        self._age = 0
-
-class Teacher(Person):
-    _kafedra = str()
-
-    def __init__(self, name : str = "",
-                       age : int = 0,
-                       kafedra : str = ""
-                 ):
-        super().__init__(name, age)
-        self._kafedra = kafedra
+class AutoGun(Gun):
+    def __init__(self, damage: int = 0, bullet_count: int = 0):
+        super().__init__(damage, bullet_count)
 
     def __del__(self):
         pass
 
-    def my_job(self):
-        return f"Я работаю на кафедре {self._kafedra}"
+    def fire(self):
+        for i in range(0,3):
+            print("Ра-та-та-та")
 
-    def say_hello(self):
-         return f"{super().say_hello()}. {self.my_job()}"
+    def reload(self):
+        print("Перезарядка автомата")
 
-    def getMedId(self):
-        return f"Мой СНИЛС - {self._med_id}"
+    def aim(self):
+        print("Целиться с автомата - терять время впустую")
 
-@final
-class Aspirant(Student, Teacher):
-    def __init__(self,
-                 name: str = "",
-                 age: int = 0,
-                 group: str = "",
-                 kafedra: str = "",
-                 ):
-        super().__init__(name, age, group)
-        self._kafedra = kafedra
-
-    def __del__(self):
-        pass
+def choice_weapon(weapon : Gun):
+    weapon.fire()
+    weapon.reload()
+    weapon.aim()
+    weapon.fire()
 
 
 
-class Admin(Person):
-    __post = str()
+bfg = BigFuckingGun(1000)
+ak = AutoGun(10)
 
-    def __init__(self, name: str = "",
-                 age: int = 0,
-                 post: str = ""
-                 ):
-        super().__init__(name, age)
-        self.__post = post
-
-    def __del__(self):
-        pass
-
-    def my_post(self):
-        return f"Я работаю на должности - {self.__post}"
-
-def function(obj : Person):
-    print(obj.say_hello())
-
-
-pers = Person("Христофор", 35)
-stud = Student("Наташа", 25, "Py42")
-admin = Admin("Мария", 29, "Директор")
-teacher = Teacher("Евгений Иванович", 65, "ДифУр")
-
-print(pers)
-print("-=========-")
-print(stud)
-print("-=========-")
-print(teacher)
-print("-=========-")
-stud.func()
-print("-=========-")
-asp = Aspirant("Степан", 26, "Py42", "МатМод")
-print(asp.say_hello())
-asp.med_id = "NewID"
-print(asp.med_id)
-print("-=========-")
-print(asp.getMedId())
-
-
-
-
-
-
-
-
-
-
-
-
+choice_weapon(ak)
+print("-===========-")
+choice_weapon(bfg)
+print("-===========-")
 

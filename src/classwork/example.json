@@ -1,0 +1,56 @@
+{
+    "key": "value",
+    "string": 15,
+    "key_1": "string",
+    "key_2": 10,
+    "key_3": 3.14,
+    "key_4": true,
+    "key_5": {
+        "key_obj_1": 1,
+        "key_obj_2": 2,
+        "key_obj_3": 3
+    },
+    "key_6": [
+        "value",
+        "value_2",
+        "value_3",
+        "value_4"
+    ],
+    "total": {
+        "key_obj_1": 1,
+        "key_obj_2": 2,
+        "key_obj_3": 3,
+        "key_array": [
+            {
+                "key_1": "string",
+                "key_2": 10,
+                "key_3": 3.14,
+                "key_4": true
+            },
+            {
+                "key_1": "string",
+                "key_2": 10,
+                "key_3": 3.14,
+                "key_4": true
+            },
+            {
+                "key_1": "string",
+                "key_2": 10,
+                "key_3": 3.14,
+                "key_4": true
+            },
+            {
+                "key_1": "value",
+                "key_2": 10,
+                "key_3": 3.14,
+                "key_4": true
+            },
+            {
+                "key_1": "string",
+                "key_2": 10,
+                "key_3": 3.14,
+                "key_4": true
+            }
+        ]
+    }
+}

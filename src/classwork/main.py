@@ -1,24 +1,22 @@
-import threading
+import ThreadingExample.DataBaseInterface as DataBaseInter
+# import psycopg2
+# import threading
 import time
 
-mutex = threading.Lock()
 
-def function(sign : str):
-    mutex.acquire()
-    for i in range(1, 11):
-        print(sign * i)
-    print()
-    # time.sleep(20)
-    for i in range(10, 0, -1):
-        print(sign * i)
-    mutex.release()
+DBThread = DataBaseInter.DataBaseInterface()
+DBThread.start()
+print("-=============-")
 
-Thr1 = threading.Thread(target=function, args=("#"))
-Thr1.daemon = True
-Thr1.start()
-Thr1 = threading.Thread(target=function, args=("*"))
+DBThread.getSelect()
+while not DBThread.statusResult():
+    time.sleep(0.01)
+print(DBThread.getResult())
+print("-=============-")
+# print(count)
 
-Thr1.start()
+DBThread.StopThread()
+DBThread.join()
 
-Thr1.join()
-# Thr2.join()
+
+

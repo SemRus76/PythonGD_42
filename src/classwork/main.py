@@ -1,22 +1,55 @@
-import ThreadingExample.DataBaseInterface as DataBaseInter
-# import psycopg2
-# import threading
-import time
+# Конечные точки - endpoint - это место приема сетевого трафика
+#   (интерфейс, ссылка и тд.) на непосредственно той машине,
+#   которая будет осуществлять обработку запроса
+
+# Сокет - это абстрактное представление сетевой конечной точки выраженный
+#   в конкретном ip адресе и порту
+
+import socket
 
 
-DBThread = DataBaseInter.DataBaseInterface()
-DBThread.start()
-print("-=============-")
+ipAdress = "127.0.0.1"
+port = 48084 # до 1024 порта запрещено использовать без режима привилегий
 
-DBThread.getSelect()
-while not DBThread.statusResult():
-    time.sleep(0.01)
-print(DBThread.getResult())
-print("-=============-")
-# print(count)
+soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+soc.bind((ipAdress, port))
+soc.listen()
+connective, addr = soc.accept()
+while True:
+    print(f"Установлено новое соединение: {addr}")
+    data = ""
+    dataBinary = connective.recv(1024)
+    if not dataBinary:
+        break
+    data += dataBinary.decode()
+    print(f"Пришли следующие данные: {data}")
+    message = input()
+    if message == "quit":
+        connective.close()
+        break
+    connective.send(message.encode())
+    if not soc:
+        break
 
-DBThread.StopThread()
-DBThread.join()
 
+#-======- Код клиента - запустить в отдельном окне и проекте -=======-
+'''
+import socket
 
+ipServer = "127.0.0.1"
+port = 48084
+sockClient = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sockClient.connect((ipServer, port))
 
+while True:
+    message = input()
+    if message == "quit":
+        sockClient.close()
+        break
+    sockClient.send(message.encode())
+    data = ""
+    # while True:
+    dataBinary = sockClient.recv(1024)
+    data += dataBinary.decode()
+    print(f"Ответ: {data}")
+'''

@@ -70,6 +70,12 @@ def product_count(request):
                         f"</br>"
                         f"<a href={".."}>В Назад</a>")
 
+def sayHello(request : http.HttpRequest):
+    print(request.body)
+    name = "Default"
+    return  http.JsonResponse({"helloName": f"hi, {name}"}, headers={"Access-Control-Allow-Origin" : "*"})
+
+
 # scheme: схема запроса (http или https)
 # body: представляет тело запроса в виде строки байтов
 # path: представляет путь запроса

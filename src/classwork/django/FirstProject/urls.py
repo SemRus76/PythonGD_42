@@ -10,6 +10,7 @@ temppatterns = [
 urlpatterns = [
     # path('admin/', admin.site.urls),
     path("", view.index),
+    path("sayhello", view.sayHello),
     path("product/", include(temppatterns)),
     path("user", view.user),
     path("user/<str:name>", view.user),
